@@ -1,0 +1,11 @@
+image: hashicorp/http-echo:1.0.0
+
+args:
+  - -listen=:8080
+  - -text="hello world"
+
+port:
+  name: http
+  number: 8080
+
+labels: {}
