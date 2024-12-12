@@ -39,9 +39,10 @@ jobs:
 
       - name: Update index.yaml in gh-pages
         run: |
-          git fetch origin gh-pages:gh-pages
+          git fetch origin gh-pages
           git checkout gh-pages
           helm repo index ./packaged --merge index.yaml
+          mv ./packaged/index.yaml index.yaml
           git add index.yaml
           git commit -m "Update Helm repo index for ${{ github.ref_name }}"
           git push origin gh-pages
