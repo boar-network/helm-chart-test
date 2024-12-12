@@ -41,7 +41,7 @@ jobs:
         run: |
           git fetch origin gh-pages
           git checkout gh-pages
-          helm repo index ./packaged --merge index.yaml
+          helm repo index ./packaged --url https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }} --merge index.yaml
           mv ./packaged/index.yaml index.yaml
           git add index.yaml
           git commit -m "Update Helm repo index for ${{ github.ref_name }}"
