@@ -2,10 +2,17 @@ apiVersion: v1
 entries:
   http-echo:
   - apiVersion: v2
+    created: "2024-12-12T09:27:16.439234092Z"
+    digest: 2d9230659fd51e7c6bdcb070c45d1bdb2671589bf59aecdef0991f12ccac8c3f
+    name: http-echo
+    urls:
+    - https://github.com/boar-network/helm-chart-test/releases/download/v0.1.0/http-echo-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
     created: "2024-12-12T09:24:25.020495984Z"
     digest: 2abb82369e8cb34ed939a437f1e453a4f22bda2c6fd3bc7e7f4603206681dca1
     name: http-echo
     urls:
     - https://github.com/boar-network/helm-chart-test/releases/download/v5/http-echo-0.0.3.tgz
     version: 0.0.3
-generated: "2024-12-12T09:24:25.020205682Z"
+generated: "2024-12-12T09:27:16.438956385Z"
