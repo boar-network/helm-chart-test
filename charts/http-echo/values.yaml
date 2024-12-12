@@ -1,3 +1,4 @@
+# 0.0.3
 image: hashicorp/http-echo:1.0.0
 
 args:
@@ -9,3 +10,4 @@ port:
   number: 8080
 
 labels: {}
+
