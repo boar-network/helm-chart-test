@@ -1,9 +1,9 @@
-name: Release Helm Charts
+name: Release All
 
 on:
   push:
-    branches:
-      - main
+    # tags:
+    #   - "v*"
 
 jobs:
   release:
@@ -26,9 +26,38 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
+      - name: Package Helm Chart
+        run: |
+          mkdir -p packaged
+          helm package charts/* --destination packaged
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         with:
-          charts_dir: charts/
+          tag_name: ${{ github.ref_name }}
+          release_name: "Release ${{ github.ref_name }}"
+          body: "Release for ${{ github.ref_name }} including packaged Helm charts."
+          draft: false
+          prerelease: false
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./packaged
+          asset_name: Helm_Charts
+          asset_content_type: application/x-tar
+
+      - name: Update index.yaml in gh-pages
+        run: |
+          git fetch origin gh-pages:gh-pages
+          git checkout gh-pages
+          helm repo index ./packaged --merge index.yaml
+          git add index.yaml
+          git commit -m "Update Helm repo index for ${{ github.ref_name }}"
+          git push origin gh-pages
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
